@@ -25,7 +25,6 @@ body {
     display: inline-block;
     margin-left: 10%;
     justify-content: center;
-    bottom: 10%;
 }
 
 .col{
@@ -34,7 +33,7 @@ body {
     width: 100px;
     height: 100px;
     margin: 7px;
-  
+}
 
 
 .choose-color-page {
@@ -94,4 +93,8 @@ body {
 
 .gray {
     background-color: gray;
+}
+
+.game_area {
+    display:none;
 }
