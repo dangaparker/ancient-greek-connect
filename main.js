@@ -117,7 +117,7 @@ function checkHorizontalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 0; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow][checkInnerRow + 1] && someArray[checkRow][checkInnerRow + 1] === someArray[checkRow][checkInnerRow + 2] && someArray[checkRow][checkInnerRow + 2] === someArray[checkRow][checkInnerRow + 3]){
-                console.log('you win')
+                modalWin();
             }
         }
     }
@@ -130,8 +130,21 @@ function checkVerticalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow-1][checkInnerRow] && someArray[checkRow-1][checkInnerRow] === someArray[checkRow-2][checkInnerRow] && someArray[checkRow-2][checkInnerRow] === someArray[checkRow-3][checkInnerRow]){
-                console.log('you win')
+                modalWin();
             }
         }
+    }
+}
+
+
+
+//Modal display, hide, and exit functions
+function modalWin() {
+    if (playerSwitch === 1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player One Wins!!!");
+    } else {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player Two Wins!!!");
     }
 }
