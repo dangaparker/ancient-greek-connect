@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  addClickHandler;
-  readyPageFunctions;
+  addClickHandler();
+  readyPageFunctions();
 });
 
 //Click handlers for each color
@@ -11,31 +11,33 @@ function readyPageFunctions() {
     $(".green").on("click", playerColor);
 }
 
-var playerSwitch = 0;
+var playerSwitch = 1;
 var playerOneColor = null;
 var playerTwoColor = null;
 
 //Function to assign color class to players
 function playerColor() {
-    if (playerOneColor !== null) {
-        return;
-    }
-    if (playerTwoColor !== null) {
-        return;
-    }
-    if (playerSwitch === 0) {
-        playerOneColor = $(this).attr("class");
-    } else if (playerSwitch === 1) {
-        playerTwoColor = $(this).attr("class");
+    if (playerSwitch === 1) {
+        if (playerOneColor === null) {
+            playerOneColor = $(this).attr("class");
+        }
+    } else if (playerSwitch === 0) {
+        if (playerTwoColor === null) {
+            playerTwoColor = $(this).attr("class");
+        }
     }
     $(this).addClass("gray");
     $(this).off("click");
+    playerSwitch = 1 - playerSwitch;
+    if (playerOneColor != null && playerTwoColor != null) {
+        $('.choose-color-page').hide();
+        $('.game_area').show();
+    }
 }
 
 var gameArray = [[null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null],
 [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null]];
 var columnNumber = null;
-var playerSwitch = 1;
 
 function addClickHandler() {
 $(".col0").on('click', function(){
@@ -96,10 +98,10 @@ function addColorToGrid() {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
             if (gameArray[rowCount][columnCount] === 1) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                $(selector).css('background-color', 'red');
+                $(selector).css('background-color', playerOneColor);
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                $(selector).css('background-color', 'blue');
+                $(selector).css('background-color', playerTwoColor);
             }
         }
     }
