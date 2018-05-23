@@ -1,0 +1,31 @@
+.header{
+    width:100vw;
+    height: 12vh;
+    background-color: lightskyblue;
+}
+
+.leftSide{
+    width: 10vw;
+    height:100vh;
+    background: lightgray;
+    display: inline-block;
+    position: relative;
+
+}
+.game_area{
+    width: 60vw;
+    height: 60vh;
+    position: relative;
+    display: inline-block;
+    margin-left: 10%;
+    justify-content: center;
+    bottom: 10%;
+}
+
+.col div{
+    display: inline-block;
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    margin: 7px;
+}
