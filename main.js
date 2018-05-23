@@ -93,6 +93,7 @@ function addToGridArray() {
     }
     console.log(gameArray);
     playerSwitch = 1 - playerSwitch;
+    checkPowerUpCondition();
     if (playerSwitch === 0) {
         $('.gameTitle').text("Player Two's Turn").css('background-color', playerTwoColor);
         $('.gameHeader').css("background-color", playerTwoColor);
@@ -113,6 +114,21 @@ function addColorToGrid() {
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
                 $(selector).css('background-color', playerTwoColor);
+            }
+        }
+    }
+}
+
+function checkPowerUpCondition() {
+    checkFirstPowerUp();
+    checkSecondPowerUp();
+}
+
+function checkFirstPowerUp() {
+    for (var rowCount = gameArray.length-1; rowCount >=0; rowCount--) {
+        for (var columnCount=0; columnCount < gameArray[rowCount].length; columnCount++) {
+            if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount]) && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount])){
+
             }
         }
     }
