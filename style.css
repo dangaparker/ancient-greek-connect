@@ -1,0 +1,73 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.choose-color-page {
+    height: 100%;
+    width: 100%;
+}
+
+
+.header {
+    width: 100%;
+    height: 15%;
+}
+
+
+.title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.color-section {
+    height: 85%;
+    width: 100%;
+}
+
+
+.color-container {
+    display: inline-block;
+    height: 25%;
+    width: 45%;
+    border: 2px solid black;
+    text-align: center;
+}
+
+
+.red, .blue, .gold, .green {
+    display: inline-block;
+    height: 40%;
+    width: 20%;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+
+.red {
+    background-color: red;
+}
+
+
+.blue {
+    background-color: blue;
+}
+
+
+.gold {
+    background-color: goldenrod;
+}
+
+
+.green {
+    background-color: green;
+}
+
+.gray {
+    background-color: gray;
+}
