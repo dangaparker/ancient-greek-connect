@@ -111,26 +111,42 @@ function addColorToGrid() {
 function checkWinCondition() {
     checkHorizontalWin(gameArray);
     checkVerticalWin(gameArray);
+    checkDiagonalWin(gameArray);
+    //checkDiagonalWinDown(gameArray);
 }
 
 function checkHorizontalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 0; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow][checkInnerRow + 1] && someArray[checkRow][checkInnerRow + 1] === someArray[checkRow][checkInnerRow + 2] && someArray[checkRow][checkInnerRow + 2] === someArray[checkRow][checkInnerRow + 3]){
-                console.log('you win')
+                console.log('horizontal win')
             }
         }
     }
 }
 
-
-//checkHorizontalWin(gameArray);
-
 function checkVerticalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow-1][checkInnerRow] && someArray[checkRow-1][checkInnerRow] === someArray[checkRow-2][checkInnerRow] && someArray[checkRow-2][checkInnerRow] === someArray[checkRow-3][checkInnerRow]){
-                console.log('you win')
+                console.log('vertical win')
+            }
+        }
+        
+    }
+}
+
+function checkDiagonalWin(someArray){
+   
+    for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
+        for(var checkInnerRowUpRight = 0; checkInnerRowUpRight < 4; checkInnerRowUpRight++){
+            if(someArray[checkRow][checkInnerRowUpRight] !== null && someArray[checkRow][checkInnerRowUpRight] === someArray[checkRow-1][checkInnerRowUpRight+1] && someArray[checkRow-1][checkInnerRowUpRight+1] === someArray[checkRow-2][checkInnerRowUpRight+2] && someArray[checkRow-2][checkInnerRowUpRight+2] === someArray[checkRow-3][checkInnerRowUpRight+3]){
+                console.log('diagonal up win')
+            }
+        }
+        for(var checkInnerRowUpLeft = someArray[checkRow].length-1; checkInnerRowUpLeft >=0; checkInnerRowUpLeft--){
+            if(someArray[checkRow][checkInnerRowUpLeft] !== null && someArray[checkRow][checkInnerRowUpLeft] === someArray[checkRow-1][checkInnerRowUpLeft-1] && someArray[checkRow-1][checkInnerRowUpLeft-1] === someArray[checkRow-2][checkInnerRowUpLeft-2] && someArray[checkRow-2][checkInnerRowUpLeft-2] === someArray[checkRow-3][checkInnerRowUpLeft-3]){
+                console.log('diagonal down win')
             }
         }
     }
