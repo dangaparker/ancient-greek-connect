@@ -77,6 +77,10 @@ $(".col6").on('click', function(){
     columnNumber = 6;
     addToGridArray();
 });
+
+$(".reset").on('click', function() {
+    resetGame();
+});
 }
 
 function addToGridArray() {
@@ -95,10 +99,10 @@ function addToGridArray() {
     playerSwitch = 1 - playerSwitch;
     checkPowerUpCondition();
     if (playerSwitch === 0) {
-        $('.gameTitle').text("Player Two's Turn").css('background-color', playerTwoColor);
+        $('.gameTitle').text("Player Two's Turn");
         $('.gameHeader').css("background-color", playerTwoColor);
     } else {
-        $('.gameTitle').text("Player One's Turn").css('background-color', playerOneColor);
+        $('.gameTitle').text("Player One's Turn");
         $('.gameHeader').css("background-color", playerOneColor);
     }
     addColorToGrid();
@@ -165,37 +169,30 @@ function checkVerticalWin(someArray){
     }
 }
 
-
-
-//Modal display, hide, and exit functions
-function modalWin() {
-    if (playerSwitch === 1) {
-        $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player One Wins!!!");
-    } else {
-        $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Two Wins!!!");
-    }
-}
-            }
-        }
-        
-    }
-}
-
 function checkDiagonalWin(someArray){
    
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRowUpRight = 0; checkInnerRowUpRight < 4; checkInnerRowUpRight++){
             if(someArray[checkRow][checkInnerRowUpRight] !== null && someArray[checkRow][checkInnerRowUpRight] === someArray[checkRow-1][checkInnerRowUpRight+1] && someArray[checkRow-1][checkInnerRowUpRight+1] === someArray[checkRow-2][checkInnerRowUpRight+2] && someArray[checkRow-2][checkInnerRowUpRight+2] === someArray[checkRow-3][checkInnerRowUpRight+3]){
-                console.log('diagonal up win')
+                modalWin();
             }
         }
         for(var checkInnerRowUpLeft = someArray[checkRow].length-1; checkInnerRowUpLeft >=0; checkInnerRowUpLeft--){
             if(someArray[checkRow][checkInnerRowUpLeft] !== null && someArray[checkRow][checkInnerRowUpLeft] === someArray[checkRow-1][checkInnerRowUpLeft-1] && someArray[checkRow-1][checkInnerRowUpLeft-1] === someArray[checkRow-2][checkInnerRowUpLeft-2] && someArray[checkRow-2][checkInnerRowUpLeft-2] === someArray[checkRow-3][checkInnerRowUpLeft-3]){
-                console.log('diagonal down win')
+                modalWin();
             }
         }
+    }
+}
+
+//Modal display, hide, and exit functions
+function modalWin() {
+    if (playerSwitch === 0) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player One Wins!!!");
+    } else if (playerSwitch === 1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player Two Wins!!!");
     }
 }
 
@@ -214,6 +211,7 @@ function resetGame() { //function that resets the game, including player colors 
     }
     $('.red, .blue, .gold, .green').off('click').removeClass("gray");
     readyPageFunctions();
+    $(".modal-shadow").addClass("hidden-modal");
     $('.choose-color-page').show();
     $('.game_area').hide();
     $('.title').text("Player One: Choose Your Color");
