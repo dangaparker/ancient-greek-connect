@@ -24,11 +24,8 @@ body {
 
 }
 .game_area{
-    width: 60vw;
-    height: 60vh;
     position: relative;
     display: inline-block;
-    margin-left: 10%;
     justify-content: center;
 }
 
@@ -130,16 +127,16 @@ body {
     top: 50%;
     min-width: 55%;
     min-height: 55%;
-    background-color: darkred;
+    background-color: rgba(0,0,0,0.5);
     transform: translate( -50%, -50% );
-    border: 3px double orangered;
+    border: 1px solid black;
     border-radius: 45px;
 }
 
 .modal-text {
     height: 15%;
     width: 100%;
-    color: darkgray;
+    color: white;
     text-align: center;
     font-weight: bold;
     font-size: 40px;
@@ -151,13 +148,13 @@ body {
 
 .reset {
     position: absolute;
-    color: darkgray;
+    color: white;
     font-size: 30px;
     font-weight: bold;
     text-shadow: 2px 2px 8px black;
     top: 60%;
     transform: translate( -50%, -50% );
-    background-color: orangered;
+    background-color: black;
     border-radius: 50px;
     width: 25%;
     -webkit-transition-duration: 0.4s;
@@ -165,10 +162,14 @@ body {
 }
 
 .reset:hover {
-    background-color: darkgray;
-    color: orangered;
+    background-color: white;
+    color: black;
 }
 
 .hidden-modal {
     display: none;
+}
+
+.gameGrid {
+    text-align:center;
 }
