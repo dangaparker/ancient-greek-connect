@@ -135,3 +135,21 @@ function checkVerticalWin(someArray){
         }
     }
 }
+
+function resetGame() { //function that resets the game, including player colors and game grid
+    playerSwitch = 1;
+    playerOneColor = null;
+    playerTwoColor = null;
+    $('.col').css('background-color', 'white');
+    for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
+        for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
+            if (gameArray[rowCount][colCount] != null) {
+                gameArray[rowCount][colCount] = null;
+            }
+        }
+    }
+    $('.red, .blue, .gold, .green').off('click').removeClass("gray");
+    readyPageFunctions();
+    $('.choose-color-page').show();
+    $('.game_area').hide();
+}
