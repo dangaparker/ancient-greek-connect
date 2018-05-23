@@ -127,8 +127,8 @@ function checkPowerUpCondition() {
 function checkFirstPowerUp() {
     for (var rowCount = gameArray.length-1; rowCount >=0; rowCount--) {
         for (var columnCount=0; columnCount < gameArray[rowCount].length; columnCount++) {
-            if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount]) && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount])){
-
+            if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
+                console.log("WHOOP");
             }
         }
     }
