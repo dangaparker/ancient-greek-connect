@@ -4,6 +4,38 @@ body {
     margin: 0;
 }
 
+.header{
+    width:100vw;
+    height: 12vh;
+    background-color: lightskyblue;
+}
+
+.leftSide{
+    width: 10vw;
+    height:100vh;
+    background: lightgray;
+    display: inline-block;
+    position: relative;
+
+}
+.game_area{
+    width: 60vw;
+    height: 60vh;
+    position: relative;
+    display: inline-block;
+    margin-left: 10%;
+    justify-content: center;
+    bottom: 10%;
+}
+
+.col{
+    display: inline-block;
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    margin: 7px;
+  
+
 
 .choose-color-page {
     height: 100%;
@@ -16,7 +48,6 @@ body {
     height: 15%;
 }
 
-
 .title {
     position: relative;
     display: flex;
@@ -24,12 +55,10 @@ body {
     align-items: center;
 }
 
-
 .color-section {
     height: 85%;
     width: 100%;
 }
-
 
 .color-container {
     display: inline-block;
@@ -39,7 +68,6 @@ body {
     text-align: center;
 }
 
-
 .red, .blue, .gold, .green {
     display: inline-block;
     height: 40%;
@@ -48,21 +76,17 @@ body {
     border: 2px solid black;
 }
 
-
 .red {
     background-color: red;
 }
-
 
 .blue {
     background-color: blue;
 }
 
-
 .gold {
     background-color: goldenrod;
 }
-
 
 .green {
     background-color: green;
