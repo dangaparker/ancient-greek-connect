@@ -29,9 +29,12 @@ function playerColor() {
     $(this).addClass("gray");
     $(this).off("click");
     playerSwitch = 1 - playerSwitch;
+    $('.title').text("Player Two: Choose Your Color");
     if (playerOneColor != null && playerTwoColor != null) {
         $('.choose-color-page').hide();
         $('.game_area').show();
+        $('.gameTitle').text("Player One's Turn");
+        $('.gameHeader').css("background-color", playerOneColor);
     }
 }
 
@@ -90,6 +93,13 @@ function addToGridArray() {
     }
     console.log(gameArray);
     playerSwitch = 1 - playerSwitch;
+    if (playerSwitch === 0) {
+        $('.gameTitle').text("Player Two's Turn").css('background-color', playerTwoColor);
+        $('.gameHeader').css("background-color", playerTwoColor);
+    } else {
+        $('.gameTitle').text("Player One's Turn").css('background-color', playerOneColor);
+        $('.gameHeader').css("background-color", playerOneColor);
+    }
     addColorToGrid();
     checkWinCondition();
 }
@@ -152,4 +162,5 @@ function resetGame() { //function that resets the game, including player colors 
     readyPageFunctions();
     $('.choose-color-page').show();
     $('.game_area').hide();
+    $('.title').text("Player One: Choose Your Color");
 }
