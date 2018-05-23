@@ -24,11 +24,8 @@ body {
 
 }
 .game_area{
-    width: 60vw;
-    height: 60vh;
     position: relative;
     display: inline-block;
-    margin-left: 10%;
     justify-content: center;
 }
 
@@ -111,4 +108,68 @@ body {
 
 .game_area {
     display:none;
+}
+
+/*Modal styling*/
+.modal-shadow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(40, 40, 40, 0.4);
+}
+
+.modal-box {
+    position: fixed;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    min-width: 55%;
+    min-height: 55%;
+    background-color: rgba(0,0,0,0.5);
+    transform: translate( -50%, -50% );
+    border: 1px solid black;
+    border-radius: 45px;
+}
+
+.modal-text {
+    height: 15%;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    text-shadow: 2px 2px 8px black;
+    position: absolute;
+    top: 40%;
+    transform: translateY( -50% );
+}
+
+.reset {
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px black;
+    top: 60%;
+    transform: translate( -50%, -50% );
+    background-color: black;
+    border-radius: 50px;
+    width: 25%;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.reset:hover {
+    background-color: white;
+    color: black;
+}
+
+.hidden-modal {
+    display: none;
+}
+
+.gameGrid {
+    text-align:center;
 }

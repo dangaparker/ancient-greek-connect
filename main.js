@@ -77,6 +77,10 @@ $(".col6").on('click', function(){
     columnNumber = 6;
     addToGridArray();
 });
+
+$(".reset").on('click', function() {
+    resetGame();
+});
 }
 
 function addToGridArray() {
@@ -93,11 +97,12 @@ function addToGridArray() {
     }
     console.log(gameArray);
     playerSwitch = 1 - playerSwitch;
+    checkPowerUpCondition();
     if (playerSwitch === 0) {
-        $('.gameTitle').text("Player Two's Turn").css('background-color', playerTwoColor);
+        $('.gameTitle').text("Player Two's Turn");
         $('.gameHeader').css("background-color", playerTwoColor);
     } else {
-        $('.gameTitle').text("Player One's Turn").css('background-color', playerOneColor);
+        $('.gameTitle').text("Player One's Turn");
         $('.gameHeader').css("background-color", playerOneColor);
     }
     addColorToGrid();
@@ -118,6 +123,25 @@ function addColorToGrid() {
     }
 }
 
+function checkPowerUpCondition() {
+    checkFirstPowerUp();
+}
+
+
+var firstPowerUpTrigger = 0; //trigger that gives only one player the first powerup once
+function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
+    if (firstPowerUpTrigger === 0) {
+        for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
+            for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
+                if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
+                    playerSwitch = 1 - playerSwitch;
+                    firstPowerUpTrigger = 1;
+                }
+            }
+        }
+    }
+}
+
 function checkWinCondition() {
     checkHorizontalWin(gameArray);
     checkVerticalWin(gameArray);
@@ -130,7 +154,7 @@ function checkHorizontalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 0; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow][checkInnerRow + 1] && someArray[checkRow][checkInnerRow + 1] === someArray[checkRow][checkInnerRow + 2] && someArray[checkRow][checkInnerRow + 2] === someArray[checkRow][checkInnerRow + 3]){
-                console.log('horizontal win')
+                modalWin();
             }
         }
     }
@@ -139,9 +163,9 @@ function checkVerticalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
             if(someArray[checkRow][checkInnerRow] != null && someArray[checkRow][checkInnerRow] === someArray[checkRow-1][checkInnerRow] && someArray[checkRow-1][checkInnerRow] === someArray[checkRow-2][checkInnerRow] && someArray[checkRow-2][checkInnerRow] === someArray[checkRow-3][checkInnerRow]){
-                console.log('vertical win')
+                modalWin();
             }
-        } 
+        }
     }
 }
 function checkDiagonalWin(someArray){
@@ -149,20 +173,33 @@ function checkDiagonalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRowUpRight = 0; checkInnerRowUpRight < 4; checkInnerRowUpRight++){
             if(someArray[checkRow][checkInnerRowUpRight] !== null && someArray[checkRow][checkInnerRowUpRight] === someArray[checkRow-1][checkInnerRowUpRight+1] && someArray[checkRow-1][checkInnerRowUpRight+1] === someArray[checkRow-2][checkInnerRowUpRight+2] && someArray[checkRow-2][checkInnerRowUpRight+2] === someArray[checkRow-3][checkInnerRowUpRight+3]){
-                console.log('diagonal up win')
+                modalWin();
             }
         }
         for(var checkInnerRowUpLeft = someArray[checkRow].length-1; checkInnerRowUpLeft >=0; checkInnerRowUpLeft--){
             if(someArray[checkRow][checkInnerRowUpLeft] !== null && someArray[checkRow][checkInnerRowUpLeft] === someArray[checkRow-1][checkInnerRowUpLeft-1] && someArray[checkRow-1][checkInnerRowUpLeft-1] === someArray[checkRow-2][checkInnerRowUpLeft-2] && someArray[checkRow-2][checkInnerRowUpLeft-2] === someArray[checkRow-3][checkInnerRowUpLeft-3]){
-                console.log('diagonal down win')
+                modalWin();
             }
         }
     }
 }
+
+//Modal display, hide, and exit functions
+function modalWin() {
+    if (playerSwitch === 0) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player One Wins!!!");
+    } else if (playerSwitch === 1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player Two Wins!!!");
+    }
+}
+
 function resetGame() { //function that resets the game, including player colors and game grid
     playerSwitch = 1;
     playerOneColor = null;
     playerTwoColor = null;
+    firstPowerUpTrigger = 0
     $('.col').css('background-color', 'white');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
@@ -173,11 +210,11 @@ function resetGame() { //function that resets the game, including player colors 
     }
     $('.red, .blue, .gold, .green').off('click').removeClass("gray");
     readyPageFunctions();
+    $(".modal-shadow").addClass("hidden-modal");
     $('.choose-color-page').show();
     $('.game_area').hide();
     $('.title').text("Player One: Choose Your Color");
 }
-
 
 function secondPowerUp(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 2; checkRow--){
