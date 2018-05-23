@@ -93,6 +93,7 @@ function addToGridArray() {
     }
     console.log(gameArray);
     playerSwitch = 1 - playerSwitch;
+    checkPowerUpCondition();
     if (playerSwitch === 0) {
         $('.gameTitle').text("Player Two's Turn").css('background-color', playerTwoColor);
         $('.gameHeader').css("background-color", playerTwoColor);
@@ -113,6 +114,25 @@ function addColorToGrid() {
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
                 $(selector).css('background-color', playerTwoColor);
+            }
+        }
+    }
+}
+
+function checkPowerUpCondition() {
+    checkFirstPowerUp();
+}
+
+
+var firstPowerUpTrigger = 0; //trigger that gives only one player the first powerup once
+function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
+    if (firstPowerUpTrigger === 0) {
+        for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
+            for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
+                if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
+                    playerSwitch = 1 - playerSwitch;
+                    firstPowerUpTrigger = 1;
+                }
             }
         }
     }
@@ -166,6 +186,7 @@ function resetGame() { //function that resets the game, including player colors 
     playerSwitch = 1;
     playerOneColor = null;
     playerTwoColor = null;
+    firstPowerUpTrigger = 0
     $('.col').css('background-color', 'white');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
