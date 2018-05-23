@@ -22,7 +22,7 @@
     bottom: 10%;
 }
 
-.col div{
+.col{
     display: inline-block;
     border: 1px solid black;
     width: 100px;
