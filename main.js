@@ -146,6 +146,7 @@ function checkWinCondition() {
     checkHorizontalWin(gameArray);
     checkVerticalWin(gameArray);
     checkDiagonalWin(gameArray);
+    secondPowerUp(gameArray);
     //checkDiagonalWinDown(gameArray);
 }
 
@@ -158,7 +159,6 @@ function checkHorizontalWin(someArray){
         }
     }
 }
-
 function checkVerticalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
@@ -168,7 +168,6 @@ function checkVerticalWin(someArray){
         }
     }
 }
-
 function checkDiagonalWin(someArray){
    
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
@@ -217,3 +216,12 @@ function resetGame() { //function that resets the game, including player colors 
     $('.title').text("Player One: Choose Your Color");
 }
 
+function secondPowerUp(someArray){
+    for(var checkRow = someArray.length-1; checkRow >= 2; checkRow--){
+        for(var checkX = 0; checkX <= 4; checkX++){
+            if(someArray[checkRow][checkX] !== null && someArray[checkRow][checkX] === someArray[checkRow-1][checkX+1] && someArray[checkRow-1][checkX+1] === someArray[checkRow-2][checkX+2] && someArray[checkRow-2][checkX+2] === someArray[checkRow-2][checkX] && someArray[checkRow-2][checkX] === someArray[checkRow][checkX+2]){
+             console.log('Bang')
+            }
+        }
+    }
+}
