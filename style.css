@@ -43,6 +43,7 @@ body {
     border-radius: 20%;
     background: no-repeat center;
     background-size: cover;
+    cursor: pointer;
 }
 
 
@@ -69,11 +70,13 @@ body {
     font-family: diogenes;
     color: white;
 }
-
+.buttons{
+    text-align: center;
+}
 .toggleAI {
     height: 10%;
     color: white;
-    font-size: 30px;
+    font-size: 2em;
     font-weight: bold;
     text-shadow: 2px 2px 8px black;
     background-color: black;
@@ -83,9 +86,38 @@ body {
     transition-duration: 0.4s;
     text-align:center;
     margin: 0 auto;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 6%;
+    margin-bottom: 5%;
 }
 
 .toggleAI:hover {
+    background-color: white;
+    color: black;
+}
+
+.togglePlayerNumber {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px black;
+    background-color: black;
+    border-radius: 50px;
+    width: 25%;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    text-align:center;
+    margin: 0 auto;
+    cursor: pointer;
+    font-family: diogenes;
+    display: inline-block;
+    margin-left: 6%;
+    margin-bottom: 5%;
+
+}
+
+.togglePlayerNumber:hover {
     background-color: white;
     color: black;
 }
@@ -143,6 +175,7 @@ body {
     height: 100%;
     width: 35%;
     text-align: center;
+    
 }
 
 .name {
@@ -157,7 +190,8 @@ body {
     height: 80%;
     border-radius: 50%;
     border: 2px solid black;
-    padding: 20%;
+    padding: 23%;
+    cursor: pointer;
 }
 
 .red {
@@ -243,11 +277,13 @@ body {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     font-family: diogenes;
+    cursor: pointer;
 }
 
 .reset:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
 }
 
 .zeus-modal {
