@@ -199,6 +199,7 @@ function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
             for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
                     firstPowerUpTrigger = 1;
+                    zeusModal();
                 }
             }
         }
@@ -263,12 +264,29 @@ function modalWin() {
 }
 
 
+
+
+function zeusModal() {
+    if (firstPowerUpTrigger === 1) {
+        $(".zeus-modal").removeClass("hidden-modal");
+        $(".zeus-modal-text").text("Praise Zeus mortal for he has granted you one more move");
+        firstPowerUpTrigger = 2;
+        playerSwitch++;
+        $(".zeus-modal").on("click", hideZeus);
+    }
+}
+
+function hideZeus() {
+    $(".zeus-modal").addClass("hidden-modal");
+}
+
+
 function resetGame() { //function that resets the game, including player colors and game grid
     playerSwitch = 2;
     playerOneColor = null;
     playerTwoColor = null;
     playerThreeColor = null;
-    firstPowerUpTrigger = 0
+    firstPowerUpTrigger = 0;
     toggleAICount = 0;
     $('.col').css('background-image', 'none');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
