@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  addClickHandler();
-  readyPageFunctions();
+    addClickHandler();
+    readyPageFunctions();
 });
 
 //Click handlers for each color
@@ -46,7 +46,7 @@ function playerColor() {
         $('.choose-color-page').hide();
         $('.game_area').show();
         $('.gameTitle').text("Player One's Turn");
-       // $('.gameHeader').css("background-color", playerOneColor);
+        // $('.gameHeader').css("background-color", playerOneColor);
         playerSwitch = 2;
     }
 }
@@ -76,52 +76,52 @@ function aiSelectColor() { // Allows AI to pick random color after player one ch
 };
 
 var gameArray = [[null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null],
-[null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null]];
+    [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null]];
 var columnNumber = null;
 
 function addClickHandler() {
-$(".col0").on('click', function(){
-    columnNumber = 0;
-    addToGridArray();
-});
+    $(".col0").on('click', function(){
+        columnNumber = 0;
+        addToGridArray();
+    });
 
-$(".col1").on('click', function(){
-    columnNumber = 1;
-    addToGridArray();
-});
+    $(".col1").on('click', function(){
+        columnNumber = 1;
+        addToGridArray();
+    });
 
-$(".col2").on('click', function(){
-    columnNumber = 2;
-    addToGridArray();
-});
+    $(".col2").on('click', function(){
+        columnNumber = 2;
+        addToGridArray();
+    });
 
-$(".col3").on('click', function(){
-    columnNumber = 3;
-    addToGridArray();
-});
+    $(".col3").on('click', function(){
+        columnNumber = 3;
+        addToGridArray();
+    });
 
-$(".col4").on('click', function(){
-    columnNumber = 4;
-    addToGridArray();
-});
+    $(".col4").on('click', function(){
+        columnNumber = 4;
+        addToGridArray();
+    });
 
-$(".col5").on('click', function(){
-    columnNumber = 5;
-    addToGridArray();
-});
+    $(".col5").on('click', function(){
+        columnNumber = 5;
+        addToGridArray();
+    });
 
-$(".col6").on('click', function(){
-    columnNumber = 6;
-    addToGridArray();
-});
+    $(".col6").on('click', function(){
+        columnNumber = 6;
+        addToGridArray();
+    });
 
-$(".reset").on('click', function() {
-    resetGame();
-});
+    $(".reset").on('click', function() {
+        resetGame();
+    });
 
-$(".toggleAI").on('click', function() {
-    toggleAI();
-});
+    $(".toggleAI").on('click', function() {
+        toggleAI();
+    });
 }
 
 function addToGridArray() {
@@ -259,7 +259,7 @@ function modalWin() {
     } else if (playerSwitch === -1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player Three Wins!!!");
-    }   
+    }
 }
 
 
@@ -290,7 +290,7 @@ function secondPowerUp(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 2; checkRow--){
         for(var checkX = 0; checkX <= 4; checkX++){
             if(someArray[checkRow][checkX] !== null && someArray[checkRow][checkX] === someArray[checkRow-1][checkX+1] && someArray[checkRow-1][checkX+1] === someArray[checkRow-2][checkX+2] && someArray[checkRow-2][checkX+2] === someArray[checkRow-2][checkX] && someArray[checkRow-2][checkX] === someArray[checkRow][checkX+2]){
-             console.log('Bang')
+                console.log('Bang')
             }
         }
     }
