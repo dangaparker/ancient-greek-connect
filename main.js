@@ -34,15 +34,15 @@ function playerColor() {
     $(this).addClass("gray");
     $(this).off("click");
     playerSwitch--;
-    if (playerSwitch === 1) {
+    if (playerSwitch === 1 && toggleAICount === 0) {
         $('.title').text("Player Two: Choose Your Color");
-    } else if (playerSwitch === 0) {
+    } else if (playerSwitch === 0 && toggleAICount === 0) {
         $('.title').text("Player Three: Choose Your Color");
     }
     if (toggleAICount === 1) { //if AI mode is on, runs function that allows AI to randomly choose color
-        aiModeOn();
+        aiSelectColor();
     };
-    if (playerOneColor != null && playerTwoColor != null && playerThreeColor != null) {
+    if (playerOneColor != null && playerTwoColor != null && playerThreeColor != null && toggleAICount === 0 || playerOneColor != null && playerTwoColor != null && toggleAICount === 1) {
         $('.choose-color-page').hide();
         $('.game_area').show();
         $('.gameTitle').text("Player One's Turn");
@@ -50,6 +50,30 @@ function playerColor() {
         playerSwitch = 2;
     }
 }
+
+var toggleAISwitch = 1; //toggle that switches between player and AI
+var toggleAICount = 0;
+function toggleAI() { //toggles whether AI should be on/off
+    toggleAICount = 1 - toggleAICount;
+    $('.title').text("AI Mode On. Player: choose your color.");
+    if (toggleAICount === 0 ) {
+        $('.title').text("Player One: Choose Your Color");
+    }
+};
+
+function aiSelectColor() { // Allows AI to pick random color after player one chooses color
+    var colorArray = ['red', 'blue', 'gold', 'green'];
+    if (playerOneColor != null) {
+        for (var colorCount = 0; colorCount < colorArray.length; colorCount++) {
+            if (playerOneColor === colorArray[colorCount]) {
+                colorArray.splice(colorCount, 1); //removes player one color from colorArray so AI doesn't pick undefined color
+            }
+        }
+        var randomColorNum = Math.floor((Math.random() * colorArray.length ));
+        playerTwoColor = colorArray[randomColorNum];
+    }
+    toggleAISwitch = 1 - toggleAISwitch;
+};
 
 var gameArray = [[null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null],
 [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null]];
@@ -100,37 +124,6 @@ $(".toggleAI").on('click', function() {
 });
 }
 
-var toggleAICount = 0;
-function toggleAI() { //toggles whether AI should be on/off
-    toggleAICount = 1 - toggleAICount;
-    $('.title').text("AI Mode On. Player: choose your color.");
-    if (toggleAICount === 0 ) {
-        $('.title').text("Player One: Choose Your Color");
-    }
-};
-
-function aiModeOn() { // Allows AI to pick random color after player one chooses color
-    var colorArray = ['red', 'blue', 'gold', 'green'];
-    if (playerOneColor != null) {
-        for (var colorCount = 0; colorCount < colorArray.length; colorCount++) {
-            if (playerOneColor === colorArray[colorCount]) {
-                colorArray.splice(colorCount, 1); //removes player one color from colorArray so AI doesn't pick undefined color
-            }
-        }
-        var randomColorNum = Math.floor((Math.random() * colorArray.length ));
-        playerTwoColor = colorArray[randomColorNum];
-    }
-    playerSwitch = 1 - playerSwitch;
-}
-
-function aiGridSelect() { //function that allows AI to randomly select a column
-    var randomColumnNum = Math.floor((Math.random() * 6 ));
-    columnNumber = randomColumnNum;
-    $('.gameTitle').text("Alien Intelligence Turn");
-    $('.gameHeader').css("background-color", playerTwoColor);
-    setTimeout(addToGridArray, 2000);
-}
-
 function addToGridArray() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         if (gameArray[rowCount][columnNumber] === null) {
@@ -158,15 +151,24 @@ function addToGridArray() {
     }
     addColorToGrid();
     checkWinCondition();
-    if (toggleAICount === 1 && playerSwitch === 0) { //if AI mode is on, runs function that has AI "choose" a column
+    if (toggleAICount === 1 && playerSwitch === 1) { //if AI mode is on, runs function that has AI "choose" a column
         aiGridSelect();
     }
-    if (playerSwitch === -1) {
+    if (playerSwitch === -1 || playerSwitch === 0 && toggleAICount === 1) {
         playerSwitch = 2;
         $('.gameTitle').text("Player One's Turn");
         $('.gameHeader').css("background-color", playerOneColor);
     }
 }
+
+function aiGridSelect() { //function that allows AI to randomly select a column
+    var randomColumnNum = Math.floor((Math.random() * 6 ));
+    columnNumber = randomColumnNum;
+    $('.gameTitle').text("Alien Intelligence Turn");
+    $('.gameHeader').css("background-color", playerTwoColor);
+    setTimeout(addToGridArray, 2000);
+}
+
 
 function addColorToGrid() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
@@ -196,7 +198,6 @@ function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
         for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
             for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
-                    playerSwitch = 1 - playerSwitch;
                     firstPowerUpTrigger = 1;
                 }
             }
@@ -250,18 +251,18 @@ function modalWin() {
     if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player One Wins!!!");
-    } else if (playerSwitch === 0) {
+    } else if (playerSwitch === 0 && toggleAICount === 0) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player Two Wins!!!");
-    } else if (toggleAICount === 0 && playerSwitch === -1) {
-            $(".modal-shadow").removeClass("hidden-modal");
-            $(".modal-text").text("Player Three Wins!!!");
-        if (toggleAICount === 1) {
-            $(".modal-shadow").removeClass("hidden-modal");
-            $(".modal-text").text("The Aliens Win!!!");
-        }   
-    }
+    } else if (playerSwitch === 0 && toggleAICount === 1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("The Aliens Win!!!");
+    } else if (toggleAICount === -1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player Three Wins!!!");
+    }   
 }
+
 
 function resetGame() { //function that resets the game, including player colors and game grid
     playerSwitch = 2;
