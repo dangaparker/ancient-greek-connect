@@ -47,7 +47,7 @@ body {
 
 
 .choose-color-page {
-    height: 100%;
+    height: auto;
     width: 100%;
 }
 
@@ -71,6 +71,7 @@ body {
 }
 
 .toggleAI {
+    height: 10%;
     color: white;
     font-size: 30px;
     font-weight: bold;
@@ -125,7 +126,7 @@ body {
 }
 
 .color-section {
-    height: 85%;
+    height: 70%;
     width: 100%;
 }
 
@@ -135,9 +136,7 @@ body {
     text-align: center;
 }
 
-.container-row:nth-child(1) {
-    margin-bottom: 2%;
-}
+
 
 .color-container {
     display: inline-block;
@@ -147,6 +146,7 @@ body {
 }
 
 .name {
+    height: 20%;
     color: black;
     font-size: 2em;
     font-family: diogenes;
@@ -154,10 +154,10 @@ body {
 
 .red, .blue, .gold, .green {
     display: inline-block;
-    height: auto;
+    height: 80%;
     border-radius: 50%;
     border: 2px solid black;
-    padding: 23%;
+    padding: 20%;
 }
 
 .red {
