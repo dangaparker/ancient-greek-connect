@@ -110,6 +110,7 @@ function playerColor() {
     }
     $(this).addClass("gray");
     $(this).off("click");
+    $(".toggleAI, .togglePlayerNumber").hide();
     playerSwitch--;
     if (playerSwitch === 1 && toggleAICount === 0) {
         $('.title').text("Player Two: Choose Your Diety");
@@ -351,4 +352,5 @@ function resetGame() { //function that resets the game, including player colors 
     $('.game_area').hide();
     $('.title').text("Player One: Choose Your Color");
     $('.hades-modal-shadow').addClass('hidden-modal');
+    $(".toggleAI, .togglePlayerNumber").show();
 }
