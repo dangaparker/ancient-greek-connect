@@ -41,6 +41,8 @@ body {
     padding: 3%;
     margin: 0 1%;
     border-radius: 20%
+    background: no-repeat center;
+    background-size: cover;
 }
 
 
