@@ -304,6 +304,8 @@ function hideZeus() {
 }
 
 
+var hadesTrigger = 0
+
 function resetGame() { //function that resets the game, including player colors and game grid
     playerSwitch = 2;
     playerOneColor = null;
@@ -325,6 +327,7 @@ function resetGame() { //function that resets the game, including player colors 
     $('.choose-color-page').show();
     $('.game_area').hide();
     $('.title').text("Player One: Choose Your Color");
+    $('.hades-modal-shadow').addClass('hidden-modal');
 }
 
 function secondPowerUp(someArray){
@@ -332,7 +335,15 @@ function secondPowerUp(someArray){
         for(var checkX = 0; checkX <= 4; checkX++){
             if(someArray[checkRow][checkX] !== null && someArray[checkRow][checkX] === someArray[checkRow-1][checkX+1] && someArray[checkRow-1][checkX+1] === someArray[checkRow-2][checkX+2] && someArray[checkRow-2][checkX+2] === someArray[checkRow-2][checkX] && someArray[checkRow-2][checkX] === someArray[checkRow][checkX+2]){
                 console.log('Bang')
+                hadesModal();
             }
         }
     }
+}
+
+function hadesModal(){
+    $('.hades-modal-shadow').removeClass('hidden-modal');
+    $('.hades-text').text('You have created an X. Hades will punish you in the underworld for the rest of eternity');
+   
+
 }
