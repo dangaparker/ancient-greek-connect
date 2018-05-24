@@ -29,6 +29,9 @@ function playerColor() {
     $(this).addClass("gray");
     $(this).off("click");
     playerSwitch = 1 - playerSwitch;
+    if (toggleAICount === 1) { //if AI mode is on, runs function that allows AI to randomly choose color
+        aiModeOn();
+    };
     $('.title').text("Player Two: Choose Your Color");
     if (playerOneColor != null && playerTwoColor != null) {
         $('.choose-color-page').hide();
@@ -81,6 +84,37 @@ $(".col6").on('click', function(){
 $(".reset").on('click', function() {
     resetGame();
 });
+
+$(".toggleAI").on('click', function() {
+    toggleAI();
+});
+}
+
+var toggleAICount = 0;
+function toggleAI() { //toggles whether AI should be on/off
+    toggleAICount = 1 - toggleAICount;
+};
+
+function aiModeOn() { // Allows AI to pick random color after player one chooses color
+    var colorArray = ['red', 'blue', 'gold', 'green'];
+    if (playerOneColor != null) {
+        for (var colorCount = 0; colorCount < colorArray.length; colorCount++) {
+            if (playerOneColor === colorArray[colorCount]) {
+                colorArray.splice(colorCount, 1); //removes player one color from colorArray so AI doesn't pick undefined color
+            }
+        }
+        var randomColorNum = Math.floor((Math.random() * colorArray.length ));
+        playerTwoColor = colorArray[randomColorNum];
+    }
+    playerSwitch = 1 - playerSwitch;
+}
+
+function aiGridSelect() { //function that allows AI to randomly select a column
+    var randomColumnNum = Math.floor((Math.random() * 6 ));
+    columnNumber = randomColumnNum;
+    $('.gameTitle').text("Alien Intelligence Turn");
+    $('.gameHeader').css("background-color", playerTwoColor);
+    setTimeout(addToGridArray, 2000);
 }
 
 function addToGridArray() {
@@ -107,6 +141,9 @@ function addToGridArray() {
     }
     addColorToGrid();
     checkWinCondition();
+    if (toggleAICount === 1 && playerSwitch === 0) { //if AI mode is on, runs function that has AI "choose" a column
+        aiGridSelect();
+    }
 }
 
 function addColorToGrid() {
@@ -147,7 +184,6 @@ function checkWinCondition() {
     checkVerticalWin(gameArray);
     checkDiagonalWin(gameArray);
     secondPowerUp(gameArray);
-    //checkDiagonalWinDown(gameArray);
 }
 
 function checkHorizontalWin(someArray){
@@ -191,7 +227,11 @@ function modalWin() {
         $(".modal-text").text("Player One Wins!!!");
     } else if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Two Wins!!!");
+        if (toggleAICount === 0) {
+            $(".modal-text").text("Player Two Wins!!!");
+        } else if (toggleAICount === 1) {
+            $(".modal-text").text("The Aliens Win!!!");
+        }   
     }
 }
 
@@ -200,6 +240,7 @@ function resetGame() { //function that resets the game, including player colors 
     playerOneColor = null;
     playerTwoColor = null;
     firstPowerUpTrigger = 0
+    toggleAICount = 0;
     $('.col').css('background-color', 'white');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
