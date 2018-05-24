@@ -199,6 +199,7 @@ function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
             for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
                     firstPowerUpTrigger = 1;
+                    zeusModal();
                 }
             }
         }
@@ -246,20 +247,60 @@ function checkDiagonalWin(someArray){
 }
 
 //Modal display, hide, and exit functions
+var godVictoryName = null;
 function modalWin() {
+    victoryName();
     if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player One Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
     } else if (playerSwitch === 0 && toggleAICount === 0) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Two Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
     } else if (playerSwitch === 0 && toggleAICount === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("The Aliens Win!!!");
+        $(".modal-text").text("The Gods Win!!!");
     } else if (playerSwitch === -1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Three Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
     }
+}
+
+function victoryName() { // Function that chooses which player's diety to display 
+    var nameArray = [$(".red").css("background-image"), $(".blue").css("background-image"), $(".gold").css("background-image"), $(".green").css("background-image")];
+    var nameArrayCheck = null;
+    if (playerSwitch === 1) { //Checks which player won the game
+        nameArrayCheck = playerOneColor;
+    } else if (playerSwitch === 0) {
+        nameArrayCheck = playerTwoColor;
+    } else if (playerSwitch === -1) {
+        nameArrayCheck = playerThreeColor;
+    }
+    if (nameArrayCheck === nameArray[0]) { //checks what diety the player choose to display the matching diety
+        godVictoryName = 'Ares';
+    } else if (nameArrayCheck === nameArray[1]) {
+        godVictoryName = 'Artemis';
+    } else if (nameArrayCheck === nameArray[2]) {
+        godVictoryName = 'Athena';
+    } else if (nameArrayCheck === nameArray[3]) {
+        godVictoryName = 'Poseidon';
+    }
+}
+
+
+
+
+function zeusModal() {
+    if (firstPowerUpTrigger === 1) {
+        $(".zeus-modal").removeClass("hidden-modal");
+        $(".zeus-modal-text").text("Praise Zeus mortal for he has granted you one more move");
+        firstPowerUpTrigger = 2;
+        playerSwitch++;
+        $(".zeus-modal").on("click", hideZeus);
+    }
+}
+
+function hideZeus() {
+    $(".zeus-modal").addClass("hidden-modal");
 }
 
 
@@ -270,7 +311,7 @@ function resetGame() { //function that resets the game, including player colors 
     playerOneColor = null;
     playerTwoColor = null;
     playerThreeColor = null;
-    firstPowerUpTrigger = 0
+    firstPowerUpTrigger = 0;
     toggleAICount = 0;
     $('.col').css('background-image', 'none');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
