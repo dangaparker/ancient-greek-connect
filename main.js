@@ -11,33 +11,43 @@ function readyPageFunctions() {
     $(".green").on("click", playerColor);
 }
 
-var playerSwitch = 1;
+var playerSwitch = 2;
 var playerOneColor = null;
 var playerTwoColor = null;
+var playerThreeColor = null;
 
 //Function to assign color class to players
 function playerColor() {
-    if (playerSwitch === 1) {
+    if (playerSwitch === 2) {
         if (playerOneColor === null) {
             playerOneColor = $(this).attr("class");
         }
-    } else if (playerSwitch === 0) {
+    } else if (playerSwitch === 1) {
         if (playerTwoColor === null) {
             playerTwoColor = $(this).attr("class");
+        }
+    } else if (playerSwitch === 0) {
+        if (playerThreeColor === null) {
+            playerThreeColor = $(this).attr("class");
         }
     }
     $(this).addClass("gray");
     $(this).off("click");
-    playerSwitch = 1 - playerSwitch;
+    playerSwitch--;
+    if (playerSwitch === 1) {
+        $('.title').text("Player Two: Choose Your Color");
+    } else if (playerSwitch === 0) {
+        $('.title').text("Player Three: Choose Your Color");
+    }
     if (toggleAICount === 1) { //if AI mode is on, runs function that allows AI to randomly choose color
         aiModeOn();
     };
-    $('.title').text("Player Two: Choose Your Color");
-    if (playerOneColor != null && playerTwoColor != null) {
+    if (playerOneColor != null && playerTwoColor != null && playerThreeColor != null) {
         $('.choose-color-page').hide();
         $('.game_area').show();
         $('.gameTitle').text("Player One's Turn");
         $('.gameHeader').css("background-color", playerOneColor);
+        playerSwitch = 2;
     }
 }
 
@@ -124,42 +134,53 @@ function aiGridSelect() { //function that allows AI to randomly select a column
 function addToGridArray() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         if (gameArray[rowCount][columnNumber] === null) {
-            if (playerSwitch === 0) {
-                gameArray[rowCount][columnNumber] = 0;
+            if (playerSwitch === 2) {
+                gameArray[rowCount][columnNumber] = 2;
                 break;
             } else if (playerSwitch === 1) {
                 gameArray[rowCount][columnNumber] = 1;
+                break;
+            } else if (playerSwitch === 0) {
+                gameArray[rowCount][columnNumber] = 0;
                 break;
             }
         }
     }
     console.log(gameArray);
-    playerSwitch = 1 - playerSwitch;
+    playerSwitch--;
     checkPowerUpCondition();
-    if (playerSwitch === 0) {
+    if (playerSwitch === 1){
         $('.gameTitle').text("Player Two's Turn");
         $('.gameHeader').css("background-color", playerTwoColor);
-    } else {
-        $('.gameTitle').text("Player One's Turn");
-        $('.gameHeader').css("background-color", playerOneColor);
+    } else if (playerSwitch === 0){
+        $('.gameTitle').text("Player Three's Turn");
+        $('.gameHeader').css("background-color", playerThreeColor);
     }
     addColorToGrid();
     checkWinCondition();
     if (toggleAICount === 1 && playerSwitch === 0) { //if AI mode is on, runs function that has AI "choose" a column
         aiGridSelect();
     }
+    if (playerSwitch === -1) {
+        playerSwitch = 2;
+        $('.gameTitle').text("Player One's Turn");
+        $('.gameHeader').css("background-color", playerOneColor);
+    }
 }
 
 function addColorToGrid() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
-            if (gameArray[rowCount][columnCount] === 1) {
+            if (gameArray[rowCount][columnCount] === 2) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
                 $(selector).css('background-color', playerOneColor);
-            } else if (gameArray[rowCount][columnCount] === 0) {
+            } else if (gameArray[rowCount][columnCount] === 1) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
                 $(selector).css('background-color', playerTwoColor);
-            }
+            } else if (gameArray[rowCount][columnCount] === 0) {
+                var selector = ".row" + rowCount + " .col" + columnCount;
+                $(selector).css('background-color', playerThreeColor);
+            } 
         }
     }
 }
@@ -226,23 +247,27 @@ function checkDiagonalWin(someArray){
 
 //Modal display, hide, and exit functions
 function modalWin() {
-    if (playerSwitch === 0) {
+    if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player One Wins!!!");
-    } else if (playerSwitch === 1) {
+    } else if (playerSwitch === 0) {
         $(".modal-shadow").removeClass("hidden-modal");
-        if (toggleAICount === 0) {
-            $(".modal-text").text("Player Two Wins!!!");
-        } else if (toggleAICount === 1) {
+        $(".modal-text").text("Player Two Wins!!!");
+    } else if (toggleAICount === 0 && playerSwitch === -1) {
+            $(".modal-shadow").removeClass("hidden-modal");
+            $(".modal-text").text("Player Three Wins!!!");
+        if (toggleAICount === 1) {
+            $(".modal-shadow").removeClass("hidden-modal");
             $(".modal-text").text("The Aliens Win!!!");
         }   
     }
 }
 
 function resetGame() { //function that resets the game, including player colors and game grid
-    playerSwitch = 1;
+    playerSwitch = 2;
     playerOneColor = null;
     playerTwoColor = null;
+    playerThreeColor = null;
     firstPowerUpTrigger = 0
     toggleAICount = 0;
     $('.col').css('background-color', 'white');
