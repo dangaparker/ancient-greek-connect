@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function() { //adds click handlers after DOM loads
     addClickHandler();
     readyPageFunctions();
 });
@@ -72,8 +72,23 @@ var playerModeToggle = 1;
 
 function togglePlayerMode() {
     $('.title').text("Third Player Summoned. Player One: Select Your Deity.")
+    $('.togglePlayerNumber').text("TWO PLAYER MODE");
     playerModeToggle = 1 - playerModeToggle; //if playerModeToggle === 0; three player mode activates; else two player mode;
+    if (playerModeToggle === 1) {
+        $('.title').text("Third Player Sacrificed. Player One: Select Your Deity.");
+        $('.togglePlayerNumber').text("THREE PLAYER MODE");
+    }
 }
+
+var toggleAISwitch = 1; //toggle that switches between player and AI
+var toggleAICount = 0;
+function toggleAI() { //toggles whether AI should be on/off
+    toggleAICount = 1 - toggleAICount;
+    $('.title').text("Choose your color and play with the Gods.");
+    if (toggleAICount === 0 ) {
+        $('.title').text("Player One: Choose Your Diety");
+    }
+};
 
 //Function to assign image class to players
 function playerColor() {
@@ -109,16 +124,6 @@ function playerColor() {
     }
 }
 
-var toggleAISwitch = 1; //toggle that switches between player and AI
-var toggleAICount = 0;
-function toggleAI() { //toggles whether AI should be on/off
-    toggleAICount = 1 - toggleAICount;
-    $('.title').text("Choose your color and play with the Gods.");
-    if (toggleAICount === 0 ) {
-        $('.title').text("Player One: Choose Your Diety");
-    }
-};
-
 function aiSelectColor() { // Allows AI to pick random color after player one chooses color
     var colorArray = [$(".red").css("background-image"), $(".blue").css("background-image"), $(".green").css("background-image"), $(".green").css("background-image")];
     if (playerOneColor != null) {
@@ -133,7 +138,7 @@ function aiSelectColor() { // Allows AI to pick random color after player one ch
     toggleAISwitch = 1 - toggleAISwitch;
 };
 
-function addToGridArray() {
+function addToGridArray() { //function that stores respective player's number into gameArray
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         if (gameArray[rowCount][columnNumber] === null) {
             if (playerSwitch === 2) {
@@ -174,7 +179,7 @@ function aiGridSelect() { //function that allows AI to randomly select a column
 }
 
 
-function addColorToGrid() {
+function addColorToGrid() { //function that adds player's image to HTML grid depending on gameArray
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
             if (gameArray[rowCount][columnCount] === 2) {
