@@ -78,6 +78,7 @@ function togglePlayerMode() {
         $('.title').text("Third Player Sacrificed. Player One: Select Your Deity.");
         $('.togglePlayerNumber').text("THREE PLAYER MODE");
     }
+    toggleAICount = 0;
 }
 
 var toggleAISwitch = 1; //toggle that switches between player and AI
@@ -88,6 +89,8 @@ function toggleAI() { //toggles whether AI should be on/off
     if (toggleAICount === 0 ) {
         $('.title').text("Player One: Choose Your Diety");
     }
+    playerModeToggle = 1;
+    $('.togglePlayerNumber').text("THREE PLAYER MODE");
 };
 
 //Function to assign image class to players
