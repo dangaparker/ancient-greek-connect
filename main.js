@@ -11,32 +11,69 @@ function readyPageFunctions() {
     $(".green").on("click", playerColor);
 }
 
-var playerSwitch = 1;
+var playerSwitch = 2;
 var playerOneColor = null;
 var playerTwoColor = null;
+var playerThreeColor = null;
 
 //Function to assign color class to players
 function playerColor() {
-    if (playerSwitch === 1) {
+    if (playerSwitch === 2) {
         if (playerOneColor === null) {
             playerOneColor = $(this).attr("class");
         }
-    } else if (playerSwitch === 0) {
+    } else if (playerSwitch === 1) {
         if (playerTwoColor === null) {
             playerTwoColor = $(this).attr("class");
+        }
+    } else if (playerSwitch === 0) {
+        if (playerThreeColor === null) {
+            playerThreeColor = $(this).attr("class");
         }
     }
     $(this).addClass("gray");
     $(this).off("click");
-    playerSwitch = 1 - playerSwitch;
-    $('.title').text("Player Two: Choose Your Color");
-    if (playerOneColor != null && playerTwoColor != null) {
+    playerSwitch--;
+    if (playerSwitch === 1 && toggleAICount === 0) {
+        $('.title').text("Player Two: Choose Your Color");
+    } else if (playerSwitch === 0 && toggleAICount === 0) {
+        $('.title').text("Player Three: Choose Your Color");
+    }
+    if (toggleAICount === 1) { //if AI mode is on, runs function that allows AI to randomly choose color
+        aiSelectColor();
+    };
+    if (playerOneColor != null && playerTwoColor != null && playerThreeColor != null && toggleAICount === 0 || playerOneColor != null && playerTwoColor != null && toggleAICount === 1) {
         $('.choose-color-page').hide();
         $('.game_area').show();
         $('.gameTitle').text("Player One's Turn");
-        $('.gameHeader').css("background-color", playerOneColor);
+       // $('.gameHeader').css("background-color", playerOneColor);
+        playerSwitch = 2;
     }
 }
+
+var toggleAISwitch = 1; //toggle that switches between player and AI
+var toggleAICount = 0;
+function toggleAI() { //toggles whether AI should be on/off
+    toggleAICount = 1 - toggleAICount;
+    $('.title').text("AI Mode On. Player: choose your color.");
+    if (toggleAICount === 0 ) {
+        $('.title').text("Player One: Choose Your Color");
+    }
+};
+
+function aiSelectColor() { // Allows AI to pick random color after player one chooses color
+    var colorArray = ['red', 'blue', 'gold', 'green'];
+    if (playerOneColor != null) {
+        for (var colorCount = 0; colorCount < colorArray.length; colorCount++) {
+            if (playerOneColor === colorArray[colorCount]) {
+                colorArray.splice(colorCount, 1); //removes player one color from colorArray so AI doesn't pick undefined color
+            }
+        }
+        var randomColorNum = Math.floor((Math.random() * colorArray.length ));
+        playerTwoColor = colorArray[randomColorNum];
+    }
+    toggleAISwitch = 1 - toggleAISwitch;
+};
 
 var gameArray = [[null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null],
 [null, null, null, null, null, null, null], [null, null, null, null, null, null, null], [null, null, null, null, null, null, null]];
@@ -81,44 +118,71 @@ $(".col6").on('click', function(){
 $(".reset").on('click', function() {
     resetGame();
 });
+
+$(".toggleAI").on('click', function() {
+    toggleAI();
+});
 }
 
 function addToGridArray() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         if (gameArray[rowCount][columnNumber] === null) {
-            if (playerSwitch === 0) {
-                gameArray[rowCount][columnNumber] = 0;
+            if (playerSwitch === 2) {
+                gameArray[rowCount][columnNumber] = 2;
                 break;
             } else if (playerSwitch === 1) {
                 gameArray[rowCount][columnNumber] = 1;
+                break;
+            } else if (playerSwitch === 0) {
+                gameArray[rowCount][columnNumber] = 0;
                 break;
             }
         }
     }
     console.log(gameArray);
-    playerSwitch = 1 - playerSwitch;
+    playerSwitch--;
     checkPowerUpCondition();
-    if (playerSwitch === 0) {
+    if (playerSwitch === 1){
         $('.gameTitle').text("Player Two's Turn");
-        $('.gameHeader').css("background-color", playerTwoColor);
-    } else {
-        $('.gameTitle').text("Player One's Turn");
-        $('.gameHeader').css("background-color", playerOneColor);
+        //$('.gameHeader').css("background-color", playerTwoColor);
+    } else if (playerSwitch === 0){
+        $('.gameTitle').text("Player Three's Turn");
+        //$('.gameHeader').css("background-color", playerThreeColor);
     }
     addColorToGrid();
     checkWinCondition();
+    if (toggleAICount === 1 && playerSwitch === 1) { //if AI mode is on, runs function that has AI "choose" a column
+        aiGridSelect();
+    }
+    if (playerSwitch === -1 || playerSwitch === 0 && toggleAICount === 1) {
+        playerSwitch = 2;
+        $('.gameTitle').text("Player One's Turn");
+        //$('.gameHeader').css("background-color", playerOneColor);
+    }
 }
+
+function aiGridSelect() { //function that allows AI to randomly select a column
+    var randomColumnNum = Math.floor((Math.random() * 6 ));
+    columnNumber = randomColumnNum;
+    $('.gameTitle').text("Alien Intelligence Turn");
+    //$('.gameHeader').css("background-color", playerTwoColor);
+    setTimeout(addToGridArray, 2000);
+}
+
 
 function addColorToGrid() {
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
-            if (gameArray[rowCount][columnCount] === 1) {
+            if (gameArray[rowCount][columnCount] === 2) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                $(selector).css('background-color', playerOneColor);
+               // $(selector).css('background-color', playerOneColor);
+            } else if (gameArray[rowCount][columnCount] === 1) {
+                var selector = ".row" + rowCount + " .col" + columnCount;
+               // $(selector).css('background-color', playerTwoColor);
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                $(selector).css('background-color', playerTwoColor);
-            }
+               // $(selector).css('background-color', playerThreeColor);
+            } 
         }
     }
 }
@@ -134,7 +198,6 @@ function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
         for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
             for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
-                    playerSwitch = 1 - playerSwitch;
                     firstPowerUpTrigger = 1;
                 }
             }
@@ -146,7 +209,7 @@ function checkWinCondition() {
     checkHorizontalWin(gameArray);
     checkVerticalWin(gameArray);
     checkDiagonalWin(gameArray);
-    //checkDiagonalWinDown(gameArray);
+    secondPowerUp(gameArray);
 }
 
 function checkHorizontalWin(someArray){
@@ -158,7 +221,6 @@ function checkHorizontalWin(someArray){
         }
     }
 }
-
 function checkVerticalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRow = 0; checkInnerRow < someArray[checkRow].length; checkInnerRow++){
@@ -168,7 +230,6 @@ function checkVerticalWin(someArray){
         }
     }
 }
-
 function checkDiagonalWin(someArray){
     for(var checkRow = someArray.length-1; checkRow >= 4; checkRow--){
         for(var checkInnerRowUpRight = 0; checkInnerRowUpRight < 4; checkInnerRowUpRight++){
@@ -186,21 +247,30 @@ function checkDiagonalWin(someArray){
 
 //Modal display, hide, and exit functions
 function modalWin() {
-    if (playerSwitch === 0) {
+    if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player One Wins!!!");
-    } else if (playerSwitch === 1) {
+    } else if (playerSwitch === 0 && toggleAICount === 0) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player Two Wins!!!");
-    }
+    } else if (playerSwitch === 0 && toggleAICount === 1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("The Aliens Win!!!");
+    } else if (toggleAICount === -1) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Player Three Wins!!!");
+    }   
 }
 
+
 function resetGame() { //function that resets the game, including player colors and game grid
-    playerSwitch = 1;
+    playerSwitch = 2;
     playerOneColor = null;
     playerTwoColor = null;
+    playerThreeColor = null;
     firstPowerUpTrigger = 0
-    $('.col').css('background-color', 'white');
+    toggleAICount = 0;
+    //$('.col').css('background-color', 'white');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
             if (gameArray[rowCount][colCount] != null) {
@@ -216,3 +286,12 @@ function resetGame() { //function that resets the game, including player colors 
     $('.title').text("Player One: Choose Your Color");
 }
 
+function secondPowerUp(someArray){
+    for(var checkRow = someArray.length-1; checkRow >= 2; checkRow--){
+        for(var checkX = 0; checkX <= 4; checkX++){
+            if(someArray[checkRow][checkX] !== null && someArray[checkRow][checkX] === someArray[checkRow-1][checkX+1] && someArray[checkRow-1][checkX+1] === someArray[checkRow-2][checkX+2] && someArray[checkRow-2][checkX+2] === someArray[checkRow-2][checkX] && someArray[checkRow-2][checkX] === someArray[checkRow][checkX+2]){
+             console.log('Bang')
+            }
+        }
+    }
+}
