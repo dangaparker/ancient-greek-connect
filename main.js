@@ -93,6 +93,10 @@ $(".toggleAI").on('click', function() {
 var toggleAICount = 0;
 function toggleAI() { //toggles whether AI should be on/off
     toggleAICount = 1 - toggleAICount;
+    $('.title').text("AI Mode On. Player: choose your color.");
+    if (toggleAICount === 0 ) {
+        $('.title').text("Player One: Choose Your Color");
+    }
 };
 
 function aiModeOn() { // Allows AI to pick random color after player one chooses color
