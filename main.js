@@ -209,8 +209,8 @@ function checkPowerUpCondition() {
 var firstPowerUpTrigger = 0; //trigger that gives only one player the first powerup once
 function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
     if (firstPowerUpTrigger === 0) {
-        for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
-            for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
+        for(var checkRow = gameArray.length-1; checkRow >= 2; checkRow--){
+            for(var checkX = 0; checkX <= 4; checkX++){
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
                     zeusModal();
                 }
@@ -250,6 +250,7 @@ function checkWinCondition() {
     checkHorizontalWin(gameArray);
     checkVerticalWin(gameArray);
     checkDiagonalWin(gameArray);
+    checkDraw();
 }
 
 function checkHorizontalWin(someArray){
@@ -285,6 +286,21 @@ function checkDiagonalWin(someArray){
     }
 }
 
+var drawTrigger = 0;
+function checkDraw() {
+    var drawCount = 0;
+    for(var checkRow = gameArray.length-1; checkRow >= 0; checkRow--){
+        for(var checkInnerRow = 0; checkInnerRow < gameArray[checkRow].length; checkInnerRow++){
+            if (gameArray[checkRow][checkInnerRow] != null) {
+                drawCount++;
+            }
+        }
+    }
+    if (drawCount === 49) {
+        drawTrigger = 1;
+    }
+}
+
 //Modal display, hide, and exit functions
 var godVictoryName = null;
 function modalWin() {
@@ -292,7 +308,10 @@ function modalWin() {
     victoryTrigger = 1;
     $('.gameTitle').text("The Game Is Over");
     victoryName();
-    if (playerSwitch === 1) {
+    if (drawTrigger === 1 ) {
+        $(".modal-shadow").removeClass("hidden-modal");
+        $(".modal-text").text("Draw!!!");
+    } else if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text(godVictoryName + " Wins!!!");
     } else if (playerSwitch === 0 && toggleAICount === 0) {
@@ -337,6 +356,7 @@ function resetGame() { //function that resets the game, including player colors 
     toggleAICount = 0;
     victoryTrigger = 0
     playerModeToggle = 1;
+    drawTrigger = 0;
     $('.col').css('background-image', 'none');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
