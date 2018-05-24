@@ -246,19 +246,42 @@ function checkDiagonalWin(someArray){
 }
 
 //Modal display, hide, and exit functions
+var godVictoryName = null;
 function modalWin() {
+    victoryName();
     if (playerSwitch === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player One Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
     } else if (playerSwitch === 0 && toggleAICount === 0) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Two Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
     } else if (playerSwitch === 0 && toggleAICount === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("The Aliens Win!!!");
+        $(".modal-text").text("The Gods Win!!!");
     } else if (playerSwitch === -1) {
         $(".modal-shadow").removeClass("hidden-modal");
-        $(".modal-text").text("Player Three Wins!!!");
+        $(".modal-text").text(godVictoryName + " Wins!!!");
+    }
+}
+
+function victoryName() { // Function that chooses which player's diety to display 
+    var nameArray = [$(".red").css("background-image"), $(".blue").css("background-image"), $(".green").css("background-image"), $(".green").css("background-image")];
+    var nameArrayCheck = null;
+    if (playerSwitch === 1) { //Checks which player won the game
+        nameArrayCheck = playerOneColor;
+    } else if (palyerSwitch === 0) {
+        nameArrayCheck = playerTwoColor;
+    } else if (palyerSwitch === -1) {
+        nameArrayCheck = playerThreeColor;
+    }
+    if (nameArrayCheck === nameArray[0]) { //checks what diety the player choose to display the matching diety
+        godVictoryName = 'Ares';
+    } else if (nameArrayCheck === nameArray[1]) {
+        godVictoryName = 'Artemis';
+    } else if (nameArrayCheck === nameArray[2]) {
+        godVictoryName = 'Athena';
+    } else if (nameArrayCheck === nameArray[3]) {
+        godVictoryName = 'Artemis';
     }
 }
 
