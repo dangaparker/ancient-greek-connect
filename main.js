@@ -20,15 +20,15 @@ var playerThreeColor = null;
 function playerColor() {
     if (playerSwitch === 2) {
         if (playerOneColor === null) {
-            playerOneColor = $(this).attr("class");
+            playerOneColor = $(this).css("background-image");
         }
     } else if (playerSwitch === 1) {
         if (playerTwoColor === null) {
-            playerTwoColor = $(this).attr("class");
+            playerTwoColor = $(this).css("background-image");
         }
     } else if (playerSwitch === 0) {
         if (playerThreeColor === null) {
-            playerThreeColor = $(this).attr("class");
+            playerThreeColor = $(this).css("background-image");
         }
     }
     $(this).addClass("gray");
@@ -55,14 +55,14 @@ var toggleAISwitch = 1; //toggle that switches between player and AI
 var toggleAICount = 0;
 function toggleAI() { //toggles whether AI should be on/off
     toggleAICount = 1 - toggleAICount;
-    $('.title').text("AI Mode On. Player: choose your color.");
+    $('.title').text("Choose your color and play with the Gods.");
     if (toggleAICount === 0 ) {
         $('.title').text("Player One: Choose Your Color");
     }
 };
 
 function aiSelectColor() { // Allows AI to pick random color after player one chooses color
-    var colorArray = ['red', 'blue', 'gold', 'green'];
+    var colorArray = [$(".red").css("background-image"), $(".blue").css("background-image"), $(".green").css("background-image"), $(".green").css("background-image")];
     if (playerOneColor != null) {
         for (var colorCount = 0; colorCount < colorArray.length; colorCount++) {
             if (playerOneColor === colorArray[colorCount]) {
@@ -175,14 +175,14 @@ function addColorToGrid() {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
             if (gameArray[rowCount][columnCount] === 2) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                // $(selector).css('background-color', playerOneColor);
+                $(selector).css('background-image', playerOneColor);
             } else if (gameArray[rowCount][columnCount] === 1) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                // $(selector).css('background-color', playerTwoColor);
+                $(selector).css('background-image', playerTwoColor);
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
-                // $(selector).css('background-color', playerThreeColor);
-            }
+                $(selector).css('background-image', playerThreeColor);
+            } 
         }
     }
 }
@@ -256,7 +256,7 @@ function modalWin() {
     } else if (playerSwitch === 0 && toggleAICount === 1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("The Aliens Win!!!");
-    } else if (toggleAICount === -1) {
+    } else if (playerSwitch === -1) {
         $(".modal-shadow").removeClass("hidden-modal");
         $(".modal-text").text("Player Three Wins!!!");
     }
@@ -270,7 +270,7 @@ function resetGame() { //function that resets the game, including player colors 
     playerThreeColor = null;
     firstPowerUpTrigger = 0
     toggleAICount = 0;
-    //$('.col').css('background-color', 'white');
+    $('.col').css('background-image', 'none');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
             if (gameArray[rowCount][colCount] != null) {
