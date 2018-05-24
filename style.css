@@ -247,6 +247,42 @@ body {
     color: black;
 }
 
+.zeus-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(40, 40, 40, 0.4);
+}
+
+.zeus-modal-box {
+    position: fixed;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    min-width: 80%;
+    min-height: 80%;
+    transform: translate( -50%, -50% );
+}
+
+.zeus-modal-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    color: white;
+    font-family: diogenes;
+    font-size: 3em;
+}
+
+.zeus-gif {
+    height: auto;
+    width: 100%;
+    border-radius: 10%;
+    z-index: -1;
+}
+
 .hidden-modal {
     display: none;
 }
