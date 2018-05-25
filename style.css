@@ -38,6 +38,8 @@ body {
     margin: auto;
     flex-flow: row wrap;
     align-content: space-evenly;
+    border: 5px solid lightgray;
+    border-radius: 5%;
 }
 .row {
     display: flex;
@@ -48,7 +50,7 @@ body {
 
 .col{
     display: inline-block;
-    border: 2px solid black;
+    border: 2px solid lightgray;
     width: 13%;
     height: 100%;
     border-radius: 20%;
