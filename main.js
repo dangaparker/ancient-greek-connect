@@ -210,7 +210,7 @@ function checkPowerUpCondition() {
 var firstPowerUpTrigger = 0; //trigger that gives only one player the first powerup once
 function checkFirstPowerUp() { //checks to see if player makes 3 x 3 cross
     if (firstPowerUpTrigger === 0) {
-        for (var rowCount = gameArray.length-2; rowCount >=0; rowCount--) {
+        for (var rowCount = gameArray.length-2; rowCount >=1; rowCount--) {
             for (var columnCount=1; columnCount < gameArray[rowCount].length-1; columnCount++) {
                 if (gameArray[rowCount][columnCount] != null && gameArray[rowCount][columnCount] === gameArray[rowCount+1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount-1][columnCount] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount+1] && gameArray[rowCount][columnCount] === gameArray[rowCount][columnCount-1]){
                     zeusModal();
@@ -299,6 +299,7 @@ function checkDraw() {
     }
     if (drawCount === 49) {
         drawTrigger = 1;
+        modalWin();
     }
 }
 
@@ -374,4 +375,5 @@ function resetGame() { //function that resets the game, including player colors 
     $('.title').text("Player One: Choose Your Color");
     $('.hades-modal-shadow').addClass('hidden-modal');
     $(".toggleAI, .togglePlayerNumber").show();
+    $('.togglePlayerNumber').text("THREE PLAYER MODE");
 }
