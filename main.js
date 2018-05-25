@@ -195,7 +195,8 @@ function addColorToGrid() { //function that adds player's image to HTML grid dep
             } else if (gameArray[rowCount][columnCount] === 0) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
                 $(selector).css('background-image', playerThreeColor);
-            } 
+            }
+            $(selector).addClass('animated fadeIn').css('-vendor-animation-duration', '3s');
         }
     }
 }
