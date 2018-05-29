@@ -72,13 +72,14 @@ function togglePlayerMode() {
     $('.togglePlayerNumber').text("TWO PLAYER MODE");
     playerModeToggle = 1 - playerModeToggle; //if playerModeToggle === 0; three player mode activates; else two player mode;
     if (playerModeToggle === 1) {
+        playScream();
+        playFire();
         $('.title').text("Third Player Sacrificed. Player One: Select Your Deity.");
         $('.togglePlayerNumber').text("THREE PLAYER MODE");
     }
     toggleAICount = 0;
 }
 
-var toggleAISwitch = 1; //toggle that switches between player and AI
 var toggleAICount = 0;
 function toggleAI() { //toggles whether AI should be on/off
     toggleAICount = 1 - toggleAICount;
@@ -138,7 +139,6 @@ function aiSelectGod() { // Allows AI to pick random god after player one choose
         var randomGodNum = Math.floor((Math.random() * godArray.length ));
         playerTwoGod = godArray[randomGodNum];
     }
-    toggleAISwitch = 1 - toggleAISwitch;
 };
 
 
@@ -248,6 +248,7 @@ function secondPowerUp(someArray){
 
 var hadesVictoryToggle = 0;
 function hadesModal(){
+    playFire();
     hadesVictoryToggle = 1;
     $('.hades-modal-shadow').removeClass('hidden-modal');
     $('.hades-text').text('You created a X, summoning Hades and comdemning us all to the Underworld!');
@@ -316,6 +317,7 @@ function checkDraw() {
 //Modal display, hide, and exit functions
 var godVictoryName = null;
 function modalWin() {
+    playChoir()
     victoryTrigger = 1;
     $('.gameTitle').text("The Game Is Over");
     victoryName();
@@ -378,7 +380,7 @@ function resetGame() { //function that resets the game, including player gods an
             }
         }
     }
-    $('.ares, .artemis, .athena, .poseidon, .col').off('click').removeClass("gray");
+    $('.ares, .artemis, .athena, .poseidon, .toggleAI, .togglePlayerNumber, .col').off('click').removeClass("gray");
     readyPageFunctions();
     $(".modal-shadow").addClass("hidden-modal");
     $('.choose-god-page').show();
@@ -387,4 +389,15 @@ function resetGame() { //function that resets the game, including player gods an
     $('.hades-modal-shadow').addClass('hidden-modal');
     $(".toggleAI, .togglePlayerNumber").show();
     $('.togglePlayerNumber').text("THREE PLAYER MODE");
+}
+
+function playScream() {
+    $(".scream")[0].play();
+
+};
+function playFire() {
+    $(".fire")[0].play();
+}
+function playChoir() {
+    $(".choir")[0].play();
 }
