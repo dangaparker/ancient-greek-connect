@@ -179,10 +179,16 @@ function addToGridArray() { //function that stores respective player's number in
 }
 
 function aiGridSelect() { //function that allows AI to randomly select a column
+    $('.ares, .artemis, .athena, .poseidon, .toggleAI, .togglePlayerNumber, .col').off('click');
     var randomColumnNum = Math.round((Math.random() * 6 ));
     columnNumber = randomColumnNum;
     $('.gameTitle').text("Turn of the Gods");
-    setTimeout(addToGridArray, 2000);
+    setTimeout(aiToGameArray, 2000);
+}
+
+function aiToGameArray() {
+    addToGridArray();
+    readyPageFunctions();
 }
 
 function addGodToGrid() { //function that adds player's image to HTML grid depending on gameArray
@@ -372,7 +378,7 @@ function resetGame() { //function that resets the game, including player gods an
     drawTrigger = 0;
     firstPowerUpTrigger = 0;
     hadesVictoryToggle = 0;
-    $('.col').css('background-image', 'none');
+    $('.col').css('background-image', 'none').removeClass('animated fadeIn');
     for (var rowCount = 0; rowCount < gameArray.length; rowCount++) {
         for (var colCount = 0; colCount < gameArray[rowCount].length; colCount++) {
             if (gameArray[rowCount][colCount] != null) {
