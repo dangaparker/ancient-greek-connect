@@ -81,13 +81,13 @@ function togglePlayerMode() {
 }
 
 var toggleAICount = 0;
-function toggleAI() { //toggles whether AI should be on/off
+function toggleAI() { //toggles whether AI should be on/off    //if toggle ai === 0, then it's off. if toggle ai ===1, it's on
     toggleAICount = 1 - toggleAICount;
     $('.title').text("Choose your diety and play with the Gods.");
     if (toggleAICount === 0 ) {
         $('.title').text("Player One: Select Your Diety");
     }
-    playerModeToggle = 1;
+    playerModeToggle = 1; //occurs so you can't have player 3 mode on AI
     $('.togglePlayerNumber').text("THREE PLAYER MODE");
 };
 
@@ -112,7 +112,7 @@ function playerGod() {
     $(this).off("click");
     $(".toggleAI, .togglePlayerNumber").hide();
     playerSwitch--;
-    if (playerSwitch === 1 && toggleAICount === 0) {
+    if (playerSwitch === 1 && toggleAICount === 0) { //if toggle ai === 0, then it's off. if toggle ai ===1, it's on
         $('.title').text("Player Two: Choose Your Diety");
     } else if (playerSwitch === 0 && toggleAICount === 0) {
         $('.title').text("Player Three: Choose Your Diety");
@@ -179,7 +179,7 @@ function addToGridArray() { //function that stores respective player's number in
 }
 
 function aiGridSelect() { //function that allows AI to randomly select a column
-    var randomColumnNum = Math.floor((Math.random() * 6 ));
+    var randomColumnNum = Math.round((Math.random() * 6 ));
     columnNumber = randomColumnNum;
     $('.gameTitle').text("Turn of the Gods");
     setTimeout(addToGridArray, 2000);
@@ -189,7 +189,7 @@ function addGodToGrid() { //function that adds player's image to HTML grid depen
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
         for (var columnCount = 0; columnCount < gameArray[rowCount].length; columnCount++) {
             if (gameArray[rowCount][columnCount] === 2) {
-                var selector = ".row" + rowCount + " .col" + columnCount;
+                var selector = ".row" + rowCount + " .col" + columnCount; //$('.row6 .col0')
                 $(selector).css('background-image', playerOneGod);
             } else if (gameArray[rowCount][columnCount] === 1) {
                 var selector = ".row" + rowCount + " .col" + columnCount;
@@ -318,7 +318,7 @@ function checkDraw() {
 var godVictoryName = null;
 function modalWin() {
     playChoir()
-    victoryTrigger = 1;
+    victoryTrigger = 1; //disables ai from making actions
     $('.gameTitle').text("The Game Is Over");
     victoryName();
     if (drawTrigger === 1 ) {
@@ -380,8 +380,8 @@ function resetGame() { //function that resets the game, including player gods an
             }
         }
     }
-    $('.ares, .artemis, .athena, .poseidon, .toggleAI, .togglePlayerNumber, .col').off('click').removeClass("gray");
-    readyPageFunctions();
+    $('.ares, .artemis, .athena, .poseidon, .toggleAI, .togglePlayerNumber, .col').off('click').removeClass("gray"); //removes all click handlers
+    readyPageFunctions();   //re-adds all click handlers
     $(".modal-shadow").addClass("hidden-modal");
     $('.choose-god-page').show();
     $('.game_area').hide();
