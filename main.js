@@ -71,8 +71,8 @@ function togglePlayerMode() {
     $('.title').text("Third Player Summoned. Player One: Select Your Deity.")
     $('.togglePlayerNumber').text("TWO PLAYER MODE");
     playerModeToggle = 1 - playerModeToggle; //if playerModeToggle === 0; three player mode activates; else two player mode;
-    if (playerModeToggle === 1) {
-        playScream();
+    if (playerModeToggle === 1) { 
+        playScream(); 
         playFire();
         $('.title').text("Third Player Sacrificed. Player One: Select Your Deity.");
         $('.togglePlayerNumber').text("THREE PLAYER MODE");
@@ -83,7 +83,7 @@ function togglePlayerMode() {
 var toggleAICount = 0;
 function toggleAI() { //toggles whether AI should be on/off    //if toggle ai === 0, then it's off. if toggle ai ===1, it's on
     toggleAICount = 1 - toggleAICount;
-    $('.title').text("Choose your diety and play with the Gods.");
+    $('.title').text("Choose your diety and play with the Gods."); 
     if (toggleAICount === 0 ) {
         $('.title').text("Player One: Select Your Diety");
     }
@@ -136,7 +136,7 @@ function aiSelectGod() { // Allows AI to pick random god after player one choose
                 godArray.splice(godCount, 1); //removes player one god from godArray so AI doesn't pick undefined god
             }
         }
-        var randomGodNum = Math.floor((Math.random() * godArray.length ));
+        var randomGodNum = Math.floor((Math.random() * godArray.length )); //choosed random number between 1 and lenth of godArray, to select AI charachter which becomes playerTwo
         playerTwoGod = godArray[randomGodNum];
     }
 };
@@ -144,29 +144,29 @@ function aiSelectGod() { // Allows AI to pick random god after player one choose
 
 /* Core game start */
 function addToGridArray() { //function that stores respective player's number into gameArray
-    for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) {
-        if (gameArray[rowCount][columnNumber] === null) {
+    for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) { // col number is already determined because based on where they clicked.
+        if (gameArray[rowCount][columnNumber]   === null) { //row count starts at the bottom of the array and moves up. 
             if (playerSwitch === 2) {
                 gameArray[rowCount][columnNumber] = 2;
                 break;
             } else if (playerSwitch === 1) {
                 gameArray[rowCount][columnNumber] = 1;
                 break;
-            } else if (playerSwitch === 0 && playerModeToggle === 0) {
+            } else if (playerSwitch === 0 && playerModeToggle === 0) { //if there are 3 players then perform then continue
                 gameArray[rowCount][columnNumber] = 0;
                 break;
             }
         }
     }
-    playerSwitch--;
+    playerSwitch--; //player switch decrements so that next time a column is clicked, it goes to the next player
     checkPowerUpCondition();
     if (playerSwitch === 1){
-        $('.gameTitle').text("Player Two's Turn");
+        $('.gameTitle').text("Player Two's Turn"); //this is the text at the top of the screen
     } else if (playerSwitch === 0 && playerModeToggle === 0){
         $('.gameTitle').text("Player Three's Turn");
     }
-    addGodToGrid();
-    if (hadesVictoryToggle === 0) {
+    addGodToGrid(); //then the function to add the image to the grid is called
+    if (hadesVictoryToggle === 0) { //when 1, the hades Victory toggle is disabled so 
         checkWinCondition();
     }
     if (toggleAICount === 1 && playerSwitch === 1) { //if AI mode is on, runs function that has AI "choose" a column

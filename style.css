@@ -90,7 +90,7 @@ body {
 .toggleAI {
     height: 10%;
     color: white;
-    font-size: 2em;
+    font-size: 2vw;
     font-weight: bold;
     text-shadow: 2px 2px 8px black;
     background-color: black;
@@ -112,7 +112,7 @@ body {
 
 .togglePlayerNumber {
     color: white;
-    font-size: 2em;
+    font-size: 2vw;
     font-weight: bold;
     text-shadow: 2px 2px 8px black;
     background-color: black;
@@ -138,7 +138,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    font-size:2em;
+    font-size: 3vw;
     font-family: diogenes;
     color: white;
     height: 60%;
@@ -149,7 +149,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size:3em;
+    font-size:4vw;
     font-family: diogenes;
     color: white;
     height: 60%;
@@ -171,6 +171,7 @@ body {
 .god-section {
     height: 70%;
     width: 100%;
+    color: white;
 }
 
 .container-row {
@@ -191,8 +192,7 @@ body {
 
 .name {
     height: 20%;
-    color: black;
-    font-size: 2em;
+    font-size: 2vw;
     font-family: diogenes;
 }
 
@@ -245,6 +245,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(40, 40, 40, 0.4);
+    z-index: 2;
 }
 
 .modal-box {
