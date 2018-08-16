@@ -143,7 +143,8 @@ function aiSelectGod() { // Allows AI to pick random god after player one choose
 
 
 /* Core game start */
-function addToGridArray() { //function that stores respective player's number into gameArray
+function addToGridArray() { 
+    //function that stores respective player's number into gameArray
     for (var rowCount = gameArray.length-1; rowCount >= 0; rowCount--) { // col number is already determined because based on where they clicked.
         if (gameArray[rowCount][columnNumber]   === null) { //row count starts at the bottom of the array and moves up. 
             if (playerSwitch === 2) {
@@ -160,6 +161,10 @@ function addToGridArray() { //function that stores respective player's number in
     }
     playerSwitch--; //player switch decrements so that next time a column is clicked, it goes to the next player
     checkPowerUpCondition();
+    if(rowCount===-1){
+        playerSwitch++
+    }
+    
     if (playerSwitch === 1){
         $('.gameTitle').text("Player Two's Turn"); //this is the text at the top of the screen
     } else if (playerSwitch === 0 && playerModeToggle === 0){
