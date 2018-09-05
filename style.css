@@ -392,3 +392,33 @@ body {
     opacity: .8;
     border-radius: 10%;
 }
+
+@media only screen and (max-width: 700px){
+    .mainTitle{
+        font-size: 1.5em;
+    }
+    .title{
+        font-size: 1.2em;
+    }
+    .name{
+        font-size: 1.2em;
+    }
+    .toggleAI, .togglePlayerNumber{
+        font-size: 1em;
+        width: 11em;
+        margin: 0;
+    }
+    .reset{
+        width: 7em;
+        font-size: 1.3em;
+    }
+    .modal-text{
+        font-size: 1.6em;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    .mainTitle{
+        font-size: 1.3em;
+    }
+}
